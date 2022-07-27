@@ -1,9 +1,15 @@
-package fn
+package krmfn
 
 import (
+	"errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/kustomize/kyaml/fn/framework"
 )
+
+var ErrInputRequired = errors.New("inputs are required")
+var ErrFunctionRequired = errors.New("at least one function is required")
+var ErrUnsupportedInputList = errors.New("unsupported input of type List")
+var ErrFunctionNameRequired = errors.New("function must have a name")
 
 //ResourceList is a Kubernetes list type used as the output data format in the Functions execution
 type ResourceList struct {

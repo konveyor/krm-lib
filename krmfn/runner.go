@@ -1,4 +1,4 @@
-package fn
+package krmfn
 
 import (
 	"fmt"
@@ -49,10 +49,10 @@ func (r Runner) Build() (FunctionRunner, error) {
 		return nil, runnerErr
 	}
 	if r.executeFn.input == nil {
-		return nil, fmt.Errorf("input is required")
+		return nil, ErrInputRequired
 	}
 	if len(r.executeFn.functions) == 0 {
-		return nil, fmt.Errorf("atleast one function is required")
+		return nil, ErrFunctionRequired
 	}
 	return &r.executeFn, runnerErr
 }

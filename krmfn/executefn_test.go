@@ -1,4 +1,4 @@
-package fn
+package krmfn
 
 import (
 	"fmt"
@@ -110,7 +110,7 @@ func TestExecuteFn_Execute(t *testing.T) {
 
 	functions := getFns()
 	err = executeFn.addFunctions(functions...)
-	err = executeFn.setExecWorkingDir("../testFn")
+	err = executeFn.setExecWorkingDir("../testdata")
 	if err != nil {
 		t.Errorf("Unexpected Error: %v", err)
 	}

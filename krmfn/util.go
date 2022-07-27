@@ -1,4 +1,4 @@
-package fn
+package krmfn
 
 import (
 	"bytes"

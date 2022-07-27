@@ -1,4 +1,4 @@
-package fn
+package krmfn
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -53,7 +53,7 @@ func getFns() []Function {
 		},
 		{
 			Name: "Clean Metadata",
-			Exec: "../testFn/clean-metadata",
+			Exec: "../testdata/clean-metadata",
 		},
 	}
 	return functions
@@ -63,7 +63,7 @@ func TestRunner_WithInputs(t *testing.T) {
 	// test with empty input
 	runner := NewRunner().WithFunctions(getFns()...)
 	_, err := runner.Build()
-	assert.EqualValues(t, "input is required", err.Error())
+	assert.EqualValues(t, ErrInputRequired, err)
 
 	// expected input and function to be executed
 	in := unstructured.Unstructured{}
@@ -86,5 +86,5 @@ func TestRunner_WithInputs(t *testing.T) {
 	lst := unstructured.UnstructuredList{}
 	lst.Items = append(lst.Items, in)
 	fnRunner, err = runner.WithInputs(&lst).Build()
-	assert.EqualValues(t, "unsupported input of type List", err.Error())
+	assert.EqualValues(t, ErrUnsupportedInputList, err)
 }

@@ -1,4 +1,4 @@
-package fn
+package krmfn
 
 import (
 	"bytes"
@@ -75,7 +75,7 @@ func (e *executeFn) addInput(resource []byte) error {
 func (e *executeFn) addInputs(inputs ...runtime.Object) error {
 	for _, input := range inputs {
 		if strings.Contains(reflect.TypeOf(input).String(), "List") {
-			return fmt.Errorf("unsupported input of type List")
+			return ErrUnsupportedInputList
 		} else {
 			value, err := yaml.Marshal(input)
 			if err = e.addInput(value); err != nil {
@@ -122,7 +122,7 @@ func (e *executeFn) getFunctionConfig(functions []Function) ([]*kyaml.RNode, err
 	var functionConfig []*kyaml.RNode
 	for _, fn := range functions {
 		if fn.Name == "" {
-			return nil, fmt.Errorf("function must have a name")
+			return nil, ErrFunctionNameRequired
 		}
 		e.functionNames = append(e.functionNames, fn.Name)
 		res, err := buildFnConfigResource(fn)
