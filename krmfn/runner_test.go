@@ -2,6 +2,7 @@ package krmfn
 
 import (
 	"github.com/stretchr/testify/assert"
+	"io/ioutil"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"sigs.k8s.io/yaml"
 	"testing"
@@ -11,7 +12,11 @@ func TestRunFnRunner(t *testing.T) {
 	functions := getFns()
 
 	temp := unstructured.Unstructured{}
-	jsonValue, err := yaml.YAMLToJSON([]byte(exampleService))
+	exampleService, err := ioutil.ReadFile("../testdata/service.yaml")
+	if err != nil {
+		t.Errorf("Unexpected Error: %v", err)
+	}
+	jsonValue, err := yaml.YAMLToJSON(exampleService)
 	err = temp.UnmarshalJSON(jsonValue)
 	if err != nil {
 		t.Errorf("Unexpected Error: %v", err)
@@ -67,13 +72,18 @@ func TestRunner_WithInputs(t *testing.T) {
 
 	// expected input and function to be executed
 	in := unstructured.Unstructured{}
-	json, err := yaml.YAMLToJSON([]byte(exampleDeployment))
+	exampleService, err := ioutil.ReadFile("../testdata/service.yaml")
+	exampleDeployment, err := ioutil.ReadFile("../testdata/deployment.yaml")
+	if err != nil {
+		t.Errorf("Unexpected Error: %v", err)
+	}
+	json, err := yaml.YAMLToJSON(exampleDeployment)
 	err = in.UnmarshalJSON(json)
 	if err != nil {
 		t.Errorf("Unexpected Error: %v", err)
 	}
 
-	fnRunner, err := runner.WithInput([]byte(exampleService)).WithInputs(&in).Build()
+	fnRunner, err := runner.WithInput(exampleService).WithInputs(&in).Build()
 	if err != nil {
 		assert.Fail(t, "Runner failed while build", err)
 	}

@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"guestbook","tier":"frontend"},"name":"frontend","namespace":"guestbook"},"spec":{"ports":[{"port":80}],"selector":{"app":"guestbook","tier":"frontend"}}}
+  creationTimestamp: "2022-06-14T16:49:17Z"
+  labels:
+    app: guestbook
+    tier: frontend
+  name: frontend
+  namespace: guestbook
+  resourceVersion: "479"
+  uid: 0e19ac91-c96d-4e64-b443-c72733bf9734
+spec:
+  clusterIP: 10.109.22.148
+  clusterIPs:
+    - 10.109.22.148
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: guestbook
+    tier: frontend
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

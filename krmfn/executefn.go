@@ -75,6 +75,7 @@ func (e *executeFn) addInput(resource []byte) error {
 func (e *executeFn) addInputs(inputs ...runtime.Object) error {
 	for _, input := range inputs {
 		if strings.Contains(reflect.TypeOf(input).String(), "List") {
+			// TODO: add support for k8s to decode list object and then add the items from the list
 			return ErrUnsupportedInputList
 		} else {
 			value, err := yaml.Marshal(input)
